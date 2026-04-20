@@ -1,6 +1,52 @@
 body {
+    width:400px;
+    height:145px;
     background-color: black;
+    color: white;
+    display: flex;
+    align-items:center;
+    justify-content: space-between;
+    font-size: 24px;
+    flex-direction:column;
+    overflow: hidden;
 }
-.tittle {
+
+.title {
+    display: flex;
+    flex-direction:column;
+    align-items: center;
+}
+.titlesafe{
     color: blue;
+    font-size: 180%;
+    margin-block: 0;
+    text-shadow: 0 0 2px blue;
+    width:auto;
+}
+.opensource {
+    color: blue;
+    width:100%;
+    font-size: 80%;
+}
+
+.information {
+    display:flex;
+    justify-content: space-between; /* separa elementos */
+    align-items:center;
+    width: 100%;
+    margin:0;
+    padding:0;
+}
+
+.githubimage {
+    display: block;
+    width:35px;
+    height:35px
+}
+
+.version {
+    display:flex;
+    color: blue;
+    width: 35px;
+    height: 35px
 }
