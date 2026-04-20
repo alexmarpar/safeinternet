@@ -1,8 +1,14 @@
 # safeinternet
 The next generation open source control parent
+Open source, simple and free
 
-# BRANCH DEV 
-You are in the branch dev in the branch that we are building
-## Instructions
+## Contribute now to make internet safest
+--Instructions--
 
+
+
+
+
+
+## Community
 
