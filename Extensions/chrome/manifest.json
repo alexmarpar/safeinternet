@@ -1,0 +1,25 @@
+{
+  "manifest_version": 3,
+  "name": "Safeinternet",
+  "version": "1.0",
+  "description": "Open source control parent",
+  "icons": {
+  },
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "permissions": [
+    "storage",
+    "tabs"
+  ],
+  "background": {
+    "service_worker": "background/server.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["/background/content.js"]
+    }
+  ]
+}
+

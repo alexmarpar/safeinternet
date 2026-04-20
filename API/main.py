@@ -3,6 +3,8 @@ from routers import getserver
 
 app = FastAPI()
 
+
+# Principal routes
 app.include_router(getserver.router)
 
 @app.get("/")
