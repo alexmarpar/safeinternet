@@ -9,18 +9,22 @@
   "action": {
     "default_popup": "popup.html"
   },
+  "host_permissions": ["\u003Call_urls>", "*://*/*"],
   "permissions": [
     "storage",
-    "tabs"
+    "tabs",
+    "declarativeNetRequest",
+    "webRequest",
+    "webRequestAuthProvider",
+    "declarativeNetRequest"
   ],
   "background": {
-    "service_worker": "background/server.js"
+    "service_worker": "background/background.js"
   },
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
-      "js": ["/background/content.js"]
+      "js": ["/background/localstorage.js"]
     }
   ]
 }
-
