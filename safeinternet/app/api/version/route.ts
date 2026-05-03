@@ -1,9 +1,10 @@
 import { ConfigModel } from "@/lib/models/version"
 import { bumpVersion } from "@/lib/methods/domainversion/sendversion"
 import { getOrCreateVersion } from "@/lib/methods/getorcreateversion";
+import { dbConnect } from "@/lib/dbconnect";
 
 export async function GET() {
-  const config = await ConfigModel.findOne({ key: "version" });
+  const config = await ConfigModel.findOne({ key: "db_version" });
 
   return Response.json({
     version: config?.value || "0.0.0"
@@ -12,6 +13,7 @@ export async function GET() {
 
 
 export async function POST(req: Request) {
+  await dbConnect()
   const { type } = await req.json(); // "major" | "minor" | "patch"
 
   const config = await getOrCreateVersion();

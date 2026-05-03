@@ -6,9 +6,11 @@ export async function getOrCreateVersion() {
   if (!config) {
     config = await ConfigModel.create({
       key: "db_version",
-      value: "1.0.0"
+      value: "0.0.0",
+      updatedAt: new Date()
     });
   }
+
 
   return config;
 }
