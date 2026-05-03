@@ -4,7 +4,7 @@ on:
   pull_request:
     paths:
       - "domains.txt"
-      
+
 permissions:
   contents: read
   pull-requests: write
@@ -24,14 +24,5 @@ jobs:
         with: 
           fetch-depth: 0
 
-      - name: Validate format
+      - name: Validate Domain format
         run: node scripts/validate-domains.js
-
-      - name: Auto approve if clean
-        if: success()
-        run: gh pr review ${{ github.event.pull_request.number }} --approve
-
-      - name: Auto merge if approved
-        if: success()
-        run: gh pr merge ${{ github.event.pull_request.number }} --squash --auto
-        
