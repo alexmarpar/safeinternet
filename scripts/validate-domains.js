@@ -30,7 +30,7 @@ if (hasError) {
     {
       method: "POST",
       headers: {
-        Authorization: `token ${GH_TOKEN}`,
+        Authorization: `Bearer ${GH_TOKEN}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
