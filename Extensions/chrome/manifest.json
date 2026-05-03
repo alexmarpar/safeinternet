@@ -4,7 +4,7 @@
   "version": "1.0",
   "description": "Open source control parent",
   "icons": {
-    "128": "candado.png"
+    "128": "padlock.png"
   },
   "action": {
     "default_popup": "popup.html"
