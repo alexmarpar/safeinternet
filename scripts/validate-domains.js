@@ -1,4 +1,6 @@
 import { execSync } from "child_process";
+const PR_NUMBER = process.env.PR_NUMBER;
+const TOKEN = process.env.GITHUB_TOKEN;
 
 const diff = execSync("git diff origin/main...HEAD").toString();
 
