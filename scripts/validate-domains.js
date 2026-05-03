@@ -1,6 +1,6 @@
 import { execSync } from "child_process";
 const PR_NUMBER = process.env.PR_NUMBER;
-const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
+const GH_TOKEN = process.env.GH_TOKEN;
 
 const diff = execSync("git diff origin/main...HEAD").toString();
 
@@ -22,7 +22,7 @@ for (const line of lines) {
         {
           method: "POST",
           headers: {
-            Authorization: `token ${GITHUB_TOKEN}`,
+            Authorization: `token ${GH_TOKEN}`,
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
