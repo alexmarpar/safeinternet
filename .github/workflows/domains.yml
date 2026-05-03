@@ -6,8 +6,13 @@ on:
       - "domains.txt"
 
 jobs:
+
   validate:
     runs-on: ubuntu-latest
+
+    env:
+          GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
 
     steps:
       - name: Checkout
@@ -25,6 +30,4 @@ jobs:
       - name: Auto merge if approved
         if: success()
         run: gh pr merge ${{ github.event.pull_request.number }} --squash --auto
-        env:
-          GH_TOKEN: ${{ github.token }}
-          PR_NUMBER: ${{ github.event.pull_request.number }}
+        
