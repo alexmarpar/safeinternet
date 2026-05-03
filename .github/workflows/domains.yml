@@ -1,0 +1,27 @@
+name: Validate Domains PR
+
+on:
+  pull_request:
+    paths:
+      - "domains.txt"
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Validate format
+        run: node scripts/validate-domains.js
+
+      - name: Auto approve if clean
+        if: success()
+        run: gh pr review ${{ github.event.pull_request.number }} --approve
+
+      - name: Auto merge if approved
+        if: success()
+        run: gh pr merge ${{ github.event.pull_request.number }} --squash --auto
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
