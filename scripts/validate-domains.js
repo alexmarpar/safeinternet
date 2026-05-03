@@ -1,4 +1,4 @@
-const { execSync } = require("child_process");
+import { execSync } from "child_process";
 
 const diff = execSync("git diff origin/main...HEAD").toString();
 
