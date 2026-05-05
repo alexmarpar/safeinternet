@@ -1,13 +1,13 @@
 async function fetchAndSave() {
   const resblockedomains = await fetch(
-    "http://localhost:3000/api/blockeddomains",
+    "https://safeinternetapi.vercel.app/api/blockeddomains",
   );
   const datablockeddomains = await resblockedomains.json();
   const reswhitelistdomains = await fetch(
-    "http://localhost:3000/api/whitelistdomains",
+    "https://safeinternetapi.vercel.app/api/whitelistdomains",
   )
   const datawhitelistdomains = await reswhitelistdomains.json();
-  const domainAPIversion = await fetch("http://localhost:3000/api/version");
+  const domainAPIversion = await fetch("https://safeinternetapi.vercel.app/api/version");
   const version = await domainAPIversion.json();
 
   await chrome.storage.local.set({
@@ -60,7 +60,7 @@ chrome.runtime.onStartup.addListener(applyRedirectRules);
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.type === "SCRAPE_PAGE") {
-    fetch("http://localhost:3000/api/aiscanner", {
+    fetch("https://safeinternetapi.vercel.app/api/aiscanner", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
