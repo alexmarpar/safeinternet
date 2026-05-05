@@ -25,7 +25,7 @@ Check our public safeinternet [whitelistdatabase](https://safeinternetapi.vercel
 Check our public safeinternet [blockeddomainsdatabase](https://safeinternetapi.vercel.app/api/blockeddomains)
 
 
-![API version](https://safeinternetapi.vercel.app/api/version)
+[API version](https://safeinternetapi.vercel.app/api/version)
 
 ```1.0.x -> refears to blockeddomains database version```
 
