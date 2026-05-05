@@ -2,4 +2,4 @@ import mongoose from "mongoose"
 import { configSchema } from "@/lib/schemas/version"
 
 export const ConfigModel =
-  mongoose.models.Config || mongoose.model("Config", configSchema);
+  mongoose.models.configs || mongoose.model("configs", configSchema);
