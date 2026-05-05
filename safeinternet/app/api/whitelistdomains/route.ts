@@ -1,12 +1,12 @@
 import { dbConnect } from "@/lib/dbconnect";
 import whitelist from "@/lib/methods/getdomains";
-import { normalizeDomain } from "@/lib/methods/normalizedomain"
+import { normalizeDomain } from "@/lib/methods/normalizedomain";
 import { NextResponse } from "next/server";
-import { WhiteDomainModel } from "@/lib/models/whitelistdomain"
-import { bumpVersion } from "@/lib/methods/domainversion/sendversion"
-import { getOrCreateVersion } from "@/lib/methods/getorcreateversion"
-import { ConfigModel } from "@/lib/models/version"
-
+import { WhiteDomainModel } from "@/lib/models/whitelistdomain";
+import { BlockedDomainsModel } from "@/lib/models/domain";
+import { bumpVersion } from "@/lib/methods/domainversion/sendversion";
+import { getOrCreateVersion } from "@/lib/methods/getorcreateversion";
+import { ConfigModel } from "@/lib/models/version";
 
 export async function GET() {
   await dbConnect();
@@ -26,11 +26,31 @@ export async function POST(req: Request) {
     }
     const normalizedDomain = normalizeDomain(domain);
 
+    const exists = await BlockedDomainsModel.findOne({
+      domain: normalizedDomain,
+    });
+
+    if (exists) {
+      return NextResponse.json(
+        { error: "Domain exists in blocked domains" },
+        { status: 403 },
+      );
+    }
+
     const newDomain = await WhiteDomainModel.create({
       domain: normalizedDomain,
     });
     const config = await getOrCreateVersion();
-    await bumpVersion(config.value,"minor"); 
+    const newVersion = bumpVersion(config.value, "minor");
+
+    await ConfigModel.updateOne(
+      { key: "db_version" },
+      {
+        value: newVersion,
+        updatedAt: new Date(),
+      },
+      { upsert: true },
+    );
 
     return NextResponse.json(newDomain, { status: 201 });
   } catch (error) {
@@ -57,15 +77,15 @@ export async function DELETE(req: Request) {
   }
 
   const config = await getOrCreateVersion();
-  const newVersion = bumpVersion(config.value, "minor")
+  const newVersion = bumpVersion(config.value, "minor");
 
   await ConfigModel.updateOne(
-      { key: "db_version" },
-      {
-        value: newVersion,
-        updatedAt: new Date()
-      }
-    );
+    { key: "db_version" },
+    {
+      value: newVersion,
+      updatedAt: new Date(),
+    },
+  );
 
   return Response.json({ ok: true });
 }
@@ -76,35 +96,31 @@ export async function PATCH(req: Request) {
   const { id, domain } = body;
 
   if (!id || !domain) {
-    return Response.json(
-      { error: "Missing id or domain" },
-      { status: 400 }
-    );
+    return Response.json({ error: "Missing id or domain" }, { status: 400 });
   }
-  
 
   const updated = await WhiteDomainModel.findByIdAndUpdate(
     id,
     {
       domain: domain.toLowerCase().trim(),
-      updatedAt: new Date()
+      updatedAt: new Date(),
     },
-    { new: true }
+    { new: true },
   );
 
   if (!updated) {
     return Response.json({ error: "Not found" }, { status: 404 });
   }
   const config = await getOrCreateVersion();
-  const newVersion = bumpVersion(config.value, "minor")
+  const newVersion = bumpVersion(config.value, "minor");
 
   await ConfigModel.updateOne(
-      { key: "db_version" },
-      {
-        value: newVersion,
-        updatedAt: new Date()
-      }
-    )
+    { key: "db_version" },
+    {
+      value: newVersion,
+      updatedAt: new Date(),
+    },
+  );
 
   return Response.json({ ok: true, domain: updated });
 }

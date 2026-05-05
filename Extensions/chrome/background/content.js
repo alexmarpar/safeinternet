@@ -1,18 +1,36 @@
 async function shouldScrape() {
-  const { blockedSitesFromAPI = [] } =
-    await chrome.storage.local.get("blockedSitesFromAPI");
+  const { blockeddomains = [], whitelistedDomains = [] } =
+    await chrome.storage.local.get([
+      "blockeddomains",
+      "whitelistDomains",
+    ]);
 
   const currentUrl = location.hostname;
 
-  //check if domain is blocked
-  const isBlocked = blockedSitesFromAPI.some(site =>
-    currentUrl.includes(site.domain)
+  const isWhitelisted = whitelistedDomains.some(
+    (site) =>
+      currentUrl === site.domain ||
+      currentUrl.endsWith("." + site.domain)
   );
 
-  return !isBlocked; // Scrap if isn't blocked
+  if (isWhitelisted) return true;
+
+
+  const isBlocked = blockeddomains.some(
+    (site) =>
+      currentUrl === site.domain ||
+      currentUrl.endsWith("." + site.domain)
+  );
+
+  if (isBlocked) return false;
+
+  return true;
 }
 
 async function run() {
+  if (window.__processing) return;
+  window.__processing = true;
+
   const canScrape = await shouldScrape();
 
   if (!canScrape) {
@@ -20,19 +38,24 @@ async function run() {
     return;
   }
 
-  const text = document.body.innerText;
+  const text = document.body.innerText.slice(0, 10000);
 
-  chrome.runtime.sendMessage({
+  const currentUrl = location.hostname;
+ 
+  chrome.runtime.sendMessage(
+  {
     type: "SCRAPE_PAGE",
     url: location.href,
-    payload: text
-  });
-
-  console.log("Page scrapped succesful",text);
+    payload: text,
+  },
+  (response) => {
+    if (chrome.runtime.lastError) {
+      console.error("Error sendMessage:", chrome.runtime.lastError.message);
+    } else {
+      console.log("Respuesta del background:", response);
+    }
+  }
+   
+);
 }
-/*
-Develoment note:
-we'll need a whitelistdomains for don't scrape, only scrap unknown domains and classify them
-*/
-
 run();
