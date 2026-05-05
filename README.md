@@ -20,10 +20,17 @@ Visit our installation manuals!
 Safeinternet is a infraestructure with multiples software developed by the community to make internet safest.
 
 Check our public safeinternet [whitelistdatabase](https://safeinternetapi.vercel.app/api/whitelistdomains)
+
+
 Check our public safeinternet [blockeddomainsdatabase](https://safeinternetapi.vercel.app/api/blockeddomains)
+
+
 ![API version](https://safeinternetapi.vercel.app/api/version)
+
 ```1.0.x -> refears to blockeddomains database version```
+
 ```1.x.0 -> refears to whitelistdomains database version```
+
 ```x.0.0 -> refears to infraestructure database version``
 
 ## Select your installation:
