@@ -31,10 +31,10 @@ Check our public safeinternet [blockeddomainsdatabase](https://safeinternetapi.v
 
 ```1.x.0 -> refears to whitelistdomains database version```
 
-```x.0.0 -> refears to infraestructure database version``
+```x.0.0 -> refears to infraestructure database version```
 
 ## Select your installation:
 * For **chromebooks with policys** download the [safeinternet-chrome-extension](https://github.com/alexmarpar/safeinternet/tree/main/Extensions/chrome) 
 
 ## Community
-The first contributors will come out here!
+Safeinternet contributors
