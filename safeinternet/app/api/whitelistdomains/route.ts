@@ -1,5 +1,4 @@
 import { dbConnect } from "@/lib/dbconnect";
-import whitelist from "@/lib/methods/getdomains";
 import { normalizeDomain } from "@/lib/methods/normalizedomain";
 import { NextResponse } from "next/server";
 import { WhiteDomainModel } from "@/lib/models/whitelistdomain";
@@ -13,7 +12,7 @@ import { ratelimit } from "@/lib/methods/security/ratelimit";
 export async function GET() {
   await dbConnect();
 
-  const Domains = await whitelist.find().select("-_id -__v");
+  const Domains = await WhiteDomainModel.find().select("-_id -__v");
   return Response.json(Domains);
 }
 export async function POST(req: Request) {
