@@ -1,12 +1,12 @@
 async function fetchAndSave() {
-  const res = await fetch("http://localhost:3000/api/getdomains");
+  const res = await fetch("http://localhost:3000/api/blockeddomains");
   const data = await res.json();
   const domainAPIversion =  await fetch("http://localhost:3000/api/version");
   const version = await domainAPIversion.json();
 
   await chrome.storage.local.set({
     blockedSitesFromAPI: data,
-    blockedSitesFromAPIVersion: date,
+    blockedSitesFromAPIVersion: version,
     
   });
   await applyRedirectRules()
