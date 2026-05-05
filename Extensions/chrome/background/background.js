@@ -27,11 +27,11 @@ try {
   );
 }
 async function applyRedirectRules() {
-  const { blockedSitesFromAPI = [] } = await chrome.storage.local.get(
-    "blockedSitesFromAPI",
+  const { blockeddomains = [] } = await chrome.storage.local.get(
+    "blockeddomains",
   );
 
-  const rules = blockedSitesFromAPI.map((site, i) => ({
+  const rules = blockeddomains.map((site, i) => ({
     id: i + 1,
     priority: 1,
     action: {

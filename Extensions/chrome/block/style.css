@@ -5,3 +5,34 @@ body {
 .tittle {
     color: blue;
 }
+body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #000000;
+      font-family: Arial, sans-serif;
+    }
+
+    .panel {
+      text-align: center;
+      padding: 20px;
+      background: rgb(21, 28, 31);
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .panel img {
+      max-width: 200px;
+      height: auto;
+      display: block;
+      margin: 0 auto 15px auto;
+      border-radius: 8px;
+    }
+
+    .panel h1 {
+      font-size: 20px;
+      margin: 0;
+      color: #0004ff;
+    }
