@@ -6,6 +6,8 @@ import { bumpVersion } from "@/lib/methods/domainversion/sendversion";
 import { getOrCreateVersion } from "@/lib/methods/getorcreateversion";
 import { ConfigModel } from "@/lib/models/version";
 import { WhiteDomainModel } from "@/lib/models/whitelistdomain";
+import { checkApiKey } from "@/lib/methods/security/checkapikey"
+import { ratelimit } from "@/lib/methods/security/ratelimit";
 
 import domainList from "@/lib/methods/getdomains";
 
@@ -17,6 +19,18 @@ export async function GET() {
 }
 
 export async function POST(req: Request) {
+  const ip =
+    req.headers.get("x-forwarded-for") ??
+    "unknown";
+
+  const { success } = await ratelimit.limit(ip);
+
+  if (!success) {
+    return new Response("Too Many Requests", { status: 429 });
+  }
+  if (!checkApiKey(req)) {
+  return new Response("Unauthorized", { status: 401 });
+}
   await dbConnect();
 
   try {
@@ -63,6 +77,19 @@ export async function POST(req: Request) {
   }
 }
 export async function DELETE(req: Request) {
+  const ip =
+    req.headers.get("x-forwarded-for") ??
+    "unknown";
+
+  const { success } = await ratelimit.limit(ip);
+
+  if (!success) {
+    return new Response("Too Many Requests", { status: 429 });
+  }
+  if (!checkApiKey(req)) {
+  return new Response("Unauthorized", { status: 401 });
+}
+
   await dbConnect();
 
   const { searchParams } = new URL(req.url);
@@ -92,6 +119,18 @@ export async function DELETE(req: Request) {
   return Response.json({ ok: true });
 }
 export async function PATCH(req: Request) {
+  const ip =
+    req.headers.get("x-forwarded-for") ??
+    "unknown";
+
+  const { success } = await ratelimit.limit(ip);
+
+  if (!success) {
+    return new Response("Too Many Requests", { status: 429 });
+  }
+  if (!checkApiKey(req)) {
+  return new Response("Unauthorized", { status: 401 });
+}
   await dbConnect();
 
   const body = await req.json();
@@ -124,5 +163,5 @@ export async function PATCH(req: Request) {
     },
   );
 
-  return Response.json({ ok: true, domain: updated });
+  return Response.json({ ok: true, domain: updated })
 }
