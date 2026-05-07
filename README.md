@@ -34,7 +34,9 @@ Check our public safeinternet [blockeddomainsdatabase](https://safeinternetapi.v
 ```x.0.0 -> refears to infraestructure database version```
 
 ## Select your installation:
-* For **chromebooks with policys** download the [safeinternet-chrome-extension](https://github.com/alexmarpar/safeinternet/tree/main/Extensions/chrome) 
+* For **chromebooks with policys** download the [safeinternet-chrome-extension](https://github.com/alexmarpar/safeinternet/releases) and **block with policys** the entire chrome system like ``chrome://x``only leaving what is necessary
+
+  note: Verify that the extension **can not be disabled by the user** with chrome policys
 
 ## Community
 Safeinternet contributors
